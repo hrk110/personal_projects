@@ -3,6 +3,7 @@
 #include <chrono>
 #include <array>
 #include <cmath>
+#include <string>
 using std::cout, std::endl;
 using namespace std::chrono;
 using std::this_thread::sleep_for;
@@ -25,6 +26,7 @@ constexpr int MAX_X = SCREEN_WIDTH*3/8, MAX_Y = MAX_X/2;
 constexpr double TWO_PI = 6.28318;
 constexpr double THETA_STEP = 0.07, PHI_STEP = 0.02;
 
+constexpr char LUMINANCE[] = ".,-~:;=!*#$@";
 constexpr int TIME_TO_SLEEP = 10; // millisecond
 
 int main(int argc, char *argv[])
@@ -65,7 +67,7 @@ int main(int argc, char *argv[])
         // if in canvas & nearer
         if( (0<X&&X<SCREEN_WIDTH) && (0<Y&&Y<SCREEN_HEIGHT) && D>z_buffer[pos] ) {
           z_buffer[pos] = D;
-          output[pos] = ".,-~:;=!*#$@"[L > 0 ? L : 0];
+          output[pos] = LUMINANCE[L > 0 ? L : 0];
         }
       }
     }
