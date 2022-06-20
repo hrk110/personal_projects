@@ -1,5 +1,9 @@
+*
+!*/
+!*.*
 .latex_out/
 .DS_Store
 atcoder/
 misc_examples/
 .vscode/
+.dSYM/
