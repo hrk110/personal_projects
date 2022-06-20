@@ -6,4 +6,4 @@
 atcoder/
 misc_examples/
 .vscode/
-.dSYM/
+*.dSYM/
