@@ -1,33 +1,40 @@
 #include <iostream>
 #include <string>
 #include "LinkedList.hpp"
-
-using namespace std;
+using std::cin, std::cout, std::cerr, std::endl;
 
 int main(int argc, char *argv[])
 {
   LinkedList<int> list;
-  string command;
+  std::string command;
   int key;
+  cout << "----- Linked List -----" << endl;
+
   while(true){
-    cout << "command(append/erase/search/exit): ";
+    cout << "command(append/erase/search/exit)?\n> ";
     cin >> command;
     if(command == "append" | command == "erase" | command == "search"){
-      cout << "key?: ";
+      cout << "key?\n> ";
       cin >> key;
     }
+
     if(command == "append"){
       list.append(key);
     }
     else if(command == "erase"){
-      list.erace(key);
+      if(list.erace(key)){
+        cout << "Key " << key << " was successfully erased." << endl;
+      }
+      else{
+        cout << "Unable to erase key " << key << '.' << endl;
+      }
     }
     else if(command == "search"){
       if(list.is_contained(key)){
-        cout << "key " << key << " is in the list" << endl;
+        cout << "key " << key << " is in the list." << endl;
       }
       else{
-        cout << "key " << key << " is not in the list" << endl;
+        cout << "key " << key << " is not in the list." << endl;
       }
     }
     else if (command == "exit"){

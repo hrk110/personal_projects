@@ -35,16 +35,17 @@ class LinkedList {
     ptr->next = new_node;
   }
 
-  void erace(T key){
-    for(Node *ptr = begin_; ptr; ptr = ptr->next){
+  bool erace(T key){
+    for(Node *ptr = begin_; ptr->next; ptr = ptr->next){
       if(ptr->next->key == key){
         Node *del_ptr = ptr->next;
         ptr->next = ptr->next->next;
         delete del_ptr;
-        return;
+        return true;
       }
     }
-    std::cerr << "key " << key << " is not in the list" << std::endl;
+    std::cerr << "key " << key << " is not in the list." << std::endl;
+    return false;
   }
 
   bool is_contained(T key) const{
@@ -57,10 +58,10 @@ class LinkedList {
   }
 
   void display() const{
-    std::cout << "[";
+    std::cout << "List: [";
     for(Node *ptr = begin_->next; ptr; ptr = ptr->next){
       std::cout << ptr->key << ' ';
     }
-    std::cout << "]" << std::endl;
+    std::cout << "]\n" << std::endl;
   }
 };
