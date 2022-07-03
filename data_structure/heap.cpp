@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
   while(true){
     cout << "command(append/deletemin/exit)?\n> ";
     cin >> command;
-    if(command == "append" | command == "erase" | command == "search"){
+    if(command == "append"){
       cout << "key?\n> ";
       cin >> key;
     }
