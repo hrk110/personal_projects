@@ -10,6 +10,7 @@ void display(const std::vector<int>& array){
   } cout << endl;
 }
 
+namespace Sort {
 /**
  * bubble sort: O(N^2)
  */
@@ -24,6 +25,30 @@ void bubble_sort(std::vector<int>& array){
   return;
 }
 
+std::vector<int> merge_(std::vector<int> front, std::vector<int> back){
+
+}
+
+/**
+ * merge sort: O(NlogN)
+ */
+std::vector<int> merge_sort(std::vector<int> array){
+  if(array.size() == 1){
+    return array;
+  }
+  else{
+    std::vector<int> front(array.begin(), array.begin()+array.size()/2);
+    std::vector<int> back(array.begin()+array.size()/2, array.end());
+    return merge_(merge_sort(front), merge_sort(back));
+  }
+}
+
+/**
+ * quick sort: O(NlogN)
+ */
+
+} // namespace Sort
+
 int main(int argc, char *argv[])
 {
   std::vector<int> array = {4, 5, 2, 6, 3};
@@ -34,11 +59,12 @@ int main(int argc, char *argv[])
   cout << "command(bubble/quick/merge/exit)?\n> ";
   cin >> command;
   if(command == "bubble"){
-    bubble_sort(array);
+    Sort::bubble_sort(array);
   }
   else if(command == "quick"){
   }
   else if(command == "merge"){
+    array = Sort::merge_sort(array);
   }
   else{
     cerr << "invalid command." << endl;
