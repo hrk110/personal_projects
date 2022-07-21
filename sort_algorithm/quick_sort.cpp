@@ -5,8 +5,8 @@ using std::swap;
 
 namespace QuickSort{
   /**
-   * naive: not limited to array. any type of array is allowed.
-   * but this uses a lot of memory.
+   * naive: not limited to array. any type of list is allowed.
+   * but making new array uses a large memory space.
    */
   auto naive(std::vector<int>& array){
     if(array.size() <= 1){
@@ -24,6 +24,9 @@ namespace QuickSort{
     return front_array_sorted;
   }
 
+  /**
+   * traverse from begin to end, find different two elements, and return the maximum of them.
+   */
   int find_pivot(std::vector<int>& array, int begin, int end){
     int first = array.at(begin);
     for(int i=begin+1; i<=end; ++i){
@@ -32,41 +35,41 @@ namespace QuickSort{
     return -1;
   }
 
+  /**
+   * move elements so that array will be: [less than pivot] pivot [greater than pivot]
+   */
   int partition(std::vector<int>& array, int begin, int end, int pivot){
-    cout << "partition(pivot=" << pivot << "): " << begin << "-" << end << endl;
     while(true){
       int i, j;
-      for(i=begin; array.at(i) < pivot; ++i){}
-      for(j=end; array.at(j) >= pivot; --j){}
-
+      for(i=begin; array.at(i) < pivot; ++i);
+      for(j=end; array.at(j) >= pivot; --j);
       if(i > j){
         return i;
       }
       else{
         swap(array.at(i), array.at(j));
-        cout << "swaped: "; for(auto x:array) cout << x << ' '; cout << endl;
       }
     }
   }
 
-  // sort in [begin, end]
+  /**
+   * in_place: optimized for array, which stores elements in a continuous memory space.
+   * sort in section [begin, end].
+   */
   void in_place(std::vector<int>& array, int begin, int end){
-    cout << "in_place: " << begin << "-" << end << endl;
     if(begin >= end) return;
     int pivot = find_pivot(array, begin, end);
-    if(pivot == -1){
-      cerr << "each element of array has same value." << endl;
+    if(pivot == -1){ // each element of array has same value
       return;
     }
     int pivot_pos = partition(array, begin, end, pivot);
-    cout << "partition end" << endl;
     in_place(array, begin, pivot_pos-1);
     in_place(array, pivot_pos, end);
   }
 }
 
 int main(int argc, char *argv[]){
-  std::vector<int> array = {5,6,3,9,2,8,4,7};
+  std::vector<int> array = {1,1,1,1,1,1};
   std::vector<int> sorted_array;
   cout << "----- quick sort -----" << endl;
 
