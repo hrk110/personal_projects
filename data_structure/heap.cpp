@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
       }
       else{
         auto min = h.deletemin();
-        cout << "The minimum value is " << min << '.' << endl;
+        cout << "The minimum value " << min << " is deleted." << endl;
       }
     }
-    else if (command == "exit"){
+    else if(command == "exit"){
       break;
     }
     else{
