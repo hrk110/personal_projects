@@ -1,6 +1,6 @@
 # personal_projects
 
-This is the space for my own codes and reports.
+This is the space for my own codes.
 
 ## How to update this repository
 
