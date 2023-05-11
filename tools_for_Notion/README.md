@@ -14,7 +14,7 @@ Before using these tools, be sure to complete the following steps:
 ## Usage
 
 - `python kindle_highlights.py html_file`
-- `python paper_retriever doi`
+- ~~`python paper_retriever doi`~~ Run paper_retriever.app and enter DOI to text box. log file is `./.paper_retriever.log`.
 
 ## Resources
 

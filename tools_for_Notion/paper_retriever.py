@@ -1,21 +1,37 @@
-import sys, requests, json, pathlib
+import logging, sys, requests, json, pathlib
 from bs4 import BeautifulSoup
+
+logging.basicConfig(filename='./.paper_retriever.log', level=logging.INFO, filemode='w')
+logging.info('Script paper_reetriever.py started')
 
 doi = sys.argv[1] # https://doi.org/xxxx
 crossref_url = "https://api.crossref.org/works/" + doi[16:]
+logging.info(f"crossref_url: {crossref_url}")
+
 crossref_response = requests.get(crossref_url)
+if crossref_response.status_code != 200:
+  logging.error(f"Error: Unable to fetch data from {crossref_url}. Status code: {crossref_response.status_code}")
+  sys.exit(1)
 data = json.loads(crossref_response.text)
 p = pathlib.Path("crossref_response.txt").write_text(json.dumps(data, indent=2))
 
-title = "--- Missing title ---"
+
+title = ""
 if "title" in data["message"]:
   title = data["message"]["title"][0]
-print("title: {}".format(title))
-abstract_content = [""]
+  logging.info(f"title: {title}")
+else:
+  logging.warning("title not found! find it by yourself.")
+
+
+abstract_content = ["abstract here"]
 if "abstract" in data["message"]:
   s = BeautifulSoup(data["message"]["abstract"], "html.parser")
   abstract = s.find_all("jats:p")
   abstract_content = [x.text for x in abstract]
+  logging.info("abstract added")
+else:
+  logging.warning("abstract not found! find it by yourself.")
 
 
 notion_url = "https://api.notion.com/v1/pages"
@@ -112,4 +128,7 @@ notion_payload["children"].extend([
 )
 
 notion_response = requests.post(notion_url, headers=notion_headers, json=notion_payload)
-print(notion_response)
+if notion_response.status_code != 200:
+  logging.error(f"Error: Unable to post data to {notion_url}. Status code: {notion_response.status_code}")
+  sys.exit(1)
+logging.info('Script paper_reetriever.py successfully finished')
