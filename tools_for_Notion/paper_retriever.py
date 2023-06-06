@@ -4,8 +4,10 @@ from bs4 import BeautifulSoup
 logging.basicConfig(filename='./.paper_retriever.log', level=logging.INFO, filemode='w')
 logging.info('Script paper_reetriever.py started')
 
-doi = sys.argv[1] # https://doi.org/xxxx
-crossref_url = "https://api.crossref.org/works/" + doi[16:]
+doi = sys.argv[1] # https://doi.org/xxxx or xxxx
+if doi.startswith("https://doi.org/"):
+  doi = doi[16:]
+crossref_url = "https://api.crossref.org/works/" + doi
 logging.info(f"crossref_url: {crossref_url}")
 
 crossref_response = requests.get(crossref_url)
@@ -62,7 +64,7 @@ notion_payload = {
       }
     },
     "doi": {
-        "url": doi
+        "url": f"https://doi.org/{doi}"
     }
   },
   "children": [
