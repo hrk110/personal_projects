@@ -1,10 +1,13 @@
 import logging, sys, requests, json, pathlib
 from bs4 import BeautifulSoup
 
-logging.basicConfig(filename='./.paper_retriever.log', level=logging.INFO, filemode='w')
+logging.basicConfig(filename='./log.txt', level=logging.INFO, filemode='w')
 logging.info('Script paper_reetriever.py started')
 
-doi = sys.argv[1] # https://doi.org/xxxx or xxxx
+print("Enter DOI:\t")
+doi = input().strip() # https://doi.org/xxxx or xxxx
+print(f"Retrieving {doi}...")
+
 if doi.startswith("https://doi.org/"):
   doi = doi[16:]
 crossref_url = "https://api.crossref.org/works/" + doi
@@ -102,32 +105,32 @@ for p in abstract_content:
     }
   )
 
-notion_payload["children"].extend([
-  {
-    "object": 'block',
-    "type": "paragraph",
-    "paragraph": {
-      "rich_text": [{
-        "type": "text",
-        "text": {
-          "content": "",
-        }
-      }]
-    }
-  },
-  {
-    "object": 'block',
-    "type": 'heading_1',
-    "heading_1": {
-      "rich_text": [{
-        "type": "text",
-        "text": {
-          "content": "Important notes",
-        }
-      }]
-    }
-  }]
-)
+# notion_payload["children"].extend([
+#   {
+#     "object": 'block',
+#     "type": "paragraph",
+#     "paragraph": {
+#       "rich_text": [{
+#         "type": "text",
+#         "text": {
+#           "content": "",
+#         }
+#       }]
+#     }
+#   },
+#   {
+#     "object": 'block',
+#     "type": 'heading_1',
+#     "heading_1": {
+#       "rich_text": [{
+#         "type": "text",
+#         "text": {
+#           "content": "Important notes",
+#         }
+#       }]
+#     }
+#   }]
+# )
 
 notion_response = requests.post(notion_url, headers=notion_headers, json=notion_payload)
 if notion_response.status_code != 200:
