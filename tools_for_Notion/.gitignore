@@ -1,0 +1,9 @@
+*
+!*/
+!*.*
+.latex_out/
+.DS_Store
+.vscode/
+*.dSYM/
+*.log
+*.txt
