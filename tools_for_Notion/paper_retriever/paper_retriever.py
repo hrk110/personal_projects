@@ -20,7 +20,7 @@ print(f"crossref_url: {crossref_url}")
 
 crossref_response = requests.get(crossref_url)
 if crossref_response.status_code != 200:
-  logger.error(f"Error: Unable to fetch data from {crossref_url}. Status code: {crossref_response.status_code}")
+  logger.error(f"paper_retriever: Error: Unable to fetch data from {crossref_url}. Status code: {crossref_response.status_code}")
   sys.exit(1)
 data = json.loads(crossref_response.text)
 # p = pathlib.Path("crossref_response.txt").write_text(json.dumps(data, indent=2))

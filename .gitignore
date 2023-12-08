@@ -7,3 +7,6 @@
 *.dSYM/
 *.log
 *.txt
+
+bin/
+linux_practice_book/
