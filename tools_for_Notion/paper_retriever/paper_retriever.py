@@ -1,4 +1,4 @@
-import logging, sys, requests, json, pathlib
+import logging, sys, requests, json, pathlib, os
 from bs4 import BeautifulSoup
 
 # logging.basicConfig(filename=f"{__file__}./log.txt", level=logging.INFO, filemode='w')
@@ -49,14 +49,14 @@ else:
 
 
 notion_url = "https://api.notion.com/v1/pages"
-notion_api_key = "secret_soxEiQL6nGV6AG9tZPYYPRe6gtWKofqvcjVhtJ1EOGS"
+notion_api_key = os.environ['NOTION_API_KEY']
 notion_headers = {
   "accept": "application/json",
   "Notion-Version": "2022-06-28",
   "content-type": "application/json",
   "Authorization": "Bearer " + notion_api_key
 }
-notion_database_id = "a2bcd4ec8ff843d8b60561e731a461e8"
+notion_database_id = os.environ['NOTION_DB_ID']
 
 notion_payload = {
   "parent": {

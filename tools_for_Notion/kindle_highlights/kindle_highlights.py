@@ -1,15 +1,15 @@
-import sys, pathlib, requests
+import sys, pathlib, requests, os
 from bs4 import BeautifulSoup
 
 url = "https://api.notion.com/v1/pages"
-api_key = "secret_b92XFTAJ9RsgICa80LykSPrNNysmZZbGzJs0q7yAPg3"
+api_key = os.environ['NOTION_API_KEY']
 headers = {
   "accept": "application/json",
   "Notion-Version": "2022-06-28",
   "content-type": "application/json",
   "Authorization": "Bearer " + api_key
 }
-database_id = "8b198fb90e7946478169505ba19c038f"
+database_id = os.environ['NOTION_DB_ID']
 
 soup = BeautifulSoup(pathlib.Path(sys.argv[1]).read_text(), "html.parser")
 title = soup.find("div", attrs={"class": "bookTitle"}).text.strip()

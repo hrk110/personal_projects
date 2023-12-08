@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
   std::cout << "length? "; std::cin >> length;
   char symbol = 0;
   while(symbol != 'y' && symbol != 'n'){
-  std::cout << "contain symbol?(y/n) "; std::cin >> symbol;
+  std::cout << "contain symbol? (y/n) "; std::cin >> symbol;
   }
   int candidate_num;
   std::cout << "how many candidates? "; std::cin >> candidate_num;

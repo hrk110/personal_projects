@@ -1,1 +1,0 @@
-../tools_for_Notion/paper_retriever/paper_retriever.py

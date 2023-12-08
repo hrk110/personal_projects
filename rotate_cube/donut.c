@@ -1,6 +1,4 @@
-// Compile: clang -o donut donut.c -lm
-// (1) change variable name and define some constant.
-// (2) slightly modify the order and expression according to donut-math.html(https://www.a1k0n.net/2011/07/20/donut-math.html).
+// Compile with clang: clang -o donut donut.c -lm
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
