@@ -1,7 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import logging, sys, requests, json, pathlib, os
+from dotenv import load_dotenv
 from bs4 import BeautifulSoup
+
+dotenv_path = pathlib.Path(__file__).parent/'.env'
+load_dotenv(dotenv_path)
 
 # logging.basicConfig(filename=f"{__file__}./log.txt", level=logging.INFO, filemode='w')
 logger = logging.getLogger(__name__)
