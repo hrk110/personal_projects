@@ -1,5 +1,6 @@
 /*
-  Using index rather than iterator.
+  - Using index rather than iterator.
+  - require C++23.
  */
 
 #include <algorithm>
@@ -103,7 +104,6 @@ int main(int argc, char* argv[]) {
 
     size_t i = 0;
     cout << expr(S, i) << endl;
-    // assert();
   }
   return EXIT_SUCCESS;
 }
