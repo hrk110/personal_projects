@@ -7,6 +7,11 @@ from bs4 import BeautifulSoup
 dotenv_path = pathlib.Path(__file__).parent/'.env'
 load_dotenv(dotenv_path)
 
+# \033 = \e = ESC
+RED = '\033[31m'
+BOLD = '\033[1m'
+RESET = '\033[0m'
+
 # logging.basicConfig(filename=f"{__file__}./log.txt", level=logging.INFO, filemode='w')
 logger = logging.getLogger(__name__)
 handler = logging.StreamHandler(sys.stderr)
@@ -35,7 +40,7 @@ data = json.loads(crossref_response.text)
 title = ""
 if "title" in data["message"]:
   title = data["message"]["title"][0]
-  print(f"title: {title}")
+  print(f"Title: {title}")
 else:
   logger.warning("title not found! find it by yourself.")
 
@@ -51,7 +56,7 @@ if "abstract" in data["message"]:
     logger.warning(f"the length exceed the limit. get whole sentence manually.")
     abstract_content = []
 else:
-  logger.warning("abstract not found! find it by yourself.")
+  logger.warning(f"{RED}{BOLD}abstract not found! find it by yourself.{RESET}")
 
 
 notion_url = "https://api.notion.com/v1/pages"

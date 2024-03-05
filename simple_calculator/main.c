@@ -4,80 +4,86 @@
 #include <string.h>
 
 // expr ::= term [(+|-) term]*
-int expr(const char* S, size_t* i);
+int expr(const char* S);
 // term ::= factor [(*|/) factor]*
-int term(const char* S, size_t* i);
+int term(const char* S);
 // factor ::= number | '(' expr ')'
-int factor(const char* S, size_t* i);
+int factor(const char* S);
 // number ::= [0-9]+
-int number(const char* S, size_t* i);
+int number(const char* S);
 
-int expr(const char* S, size_t* i) {
-  int val = term(S, i);
+int expr(const char* S) {
+  int val = term(&S);
 
-  while (S[*i]) {
-    if (S[*i] == '+') {
-      (*i)++;
-      val += term(S, i);
+  while (*S) {
+    if (*S == '+') {
+      S++;
+      val += term(S);
     }
-    else if (S[*i] == '-') {
-      (*i)++;
-      val -= term(S, i);
+    else if (*S == '-') {
+      S++;
+      val -= term(S);
     }
     else
+      // syntax error
       break;
   }
 
   return val;
 }
 
-int term(const char* S, size_t* i) {
-  int val = factor(S, i);
+int term(const char* S) {
+  int val = factor(S);
 
-  while (S[*i]) {
-    if (S[*i] == '*') {
-      (*i)++;
-      val *= factor(S, i);
+  while (*S) {
+    if (*S == '*') {
+      S++;
+      val *= factor(S);
     }
-    else if (S[*i] == '/') {
-      (*i)++;
-      val /= factor(S, i);
+    else if (*S == '/') {
+      S++;
+      val /= factor(S);
     }
     else
+      // syntax error
       break;
   }
   return val;
 }
 
-int factor(const char* S, size_t* i) {
-  if (S[*i] == '(') {
-    (*i)++;
-    int val = expr(S, i);
-    assert(S[*i] == ')');
+int factor(const char* S) {
+  if (*S == '(') {
+    S++;
+    int val = expr(S);
+    assert(*S == ')');
     return val;
   }
   else {
-    return number(S, i);
+    return number(S);
   }
 }
 
-int number(const char* S, size_t* i) {
+int number(const char* S) {
   int val = 0;
-  while (S[*i] && ('0' <= S[*i] && S[*i] <= '9')) {
-    val = val * 10 + (S[(*i)++] - '0');
+  while (*S && ('0' <= *S && *S <= '9')) {
+    val = val * 10 + (*(S++) - '0');
   }
   return val;
 }
 
 int main(int argc, char* argv[]) {
-  printf("Enter an expression (q for exit): ");
   char S[256] = {0};
-  scanf("%s", S);
 
-  if (strcmp(S, "q") == 0 ) return 0;
+  while (1) {
+    printf("Enter an expression (q for exit): ");
+    if ((scanf("%255[^\n]%*[^\n]", S) == 1)) break;
+    scanf("%*c");
+  }
 
-  size_t* i = (size_t)0;
-  int result = expr(S, i);
+  if (strcmp(S, "q") == 0) return 0;
+
+
+  int result = expr(S);
   printf("%d\n", result);
   return 0;
 }
