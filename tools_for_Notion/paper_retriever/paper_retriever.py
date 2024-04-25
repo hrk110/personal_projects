@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import logging, sys, requests, json, pathlib, os
 from dotenv import load_dotenv

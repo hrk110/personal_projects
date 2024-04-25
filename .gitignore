@@ -2,11 +2,13 @@
 !*/
 !*.*
 .latex_out/
+personal_projects.code-workspace
 .DS_Store
 .vscode/
 *.dSYM/
 *.log
 *.txt
 *.out
-
 environment.yml
+**/venv/**/*
+
