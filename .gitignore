@@ -7,8 +7,8 @@ personal_projects.code-workspace
 .vscode/
 *.dSYM/
 *.log
-*.txt
+# *.txt
 *.out
+**/.env
 environment.yml
 **/venv/**/*
-./tools_for_Notion/paper_retriever/venv/
