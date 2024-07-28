@@ -3,6 +3,7 @@
  * @brief Trie header file
  */
 #pragma once
+#include <cstddef>
 #include <iostream>
 #include <memory>
 #include <ostream>
@@ -30,8 +31,6 @@ template <typename Value>
 class Trie {
  public:
   Trie() : root_(new Node(0)), num_words_(0), num_nodes_(0) {
-    cout << "sizeof(Node*) = " << sizeof(Node*) << endl;                        // 8
-    cout << "sizeof(shared_ptr<Node>) = " << sizeof(shared_ptr<Node>) << endl;  // 16
   }
 
   ~Trie() {
@@ -53,7 +52,7 @@ class Trie {
           q.emplace(next);
         }
       }
-      cerr << "delete node " << node->index << endl;
+      // cerr << "delete node " << node->index << endl;
       delete node;
     }
   }
@@ -61,14 +60,18 @@ class Trie {
   class Node {
    public:
     Node(size_t index) : index(index), value(nullopt), children() {}
-    ~Node() {
-      // delete[] children;
-    }
+    ~Node() {}
 
     friend ostream& operator<<(ostream& os, const Node& node) {
       if (node.value) os << "*";
       os << node.index << ": ";
-      os << node.children << endl;
+      os << node.children;
+      return os;
+    }
+
+    friend ostream& operator<<(ostream& os, const Node* node) {
+      if (node->value) os << "*";
+      os << node->index;
       return os;
     }
 
@@ -124,14 +127,18 @@ class Trie {
   void insert(pair<string, Value>&& p) {
     auto [word, new_value] = p;
     Node* current = root_;
-    for (byte b : word) {  // not char, byte
+    for (const auto c : word) {
+      byte b = static_cast<byte>(c);
       if (!current->children.count(b)) {
         current->children.insert({b, new Node(++num_nodes_)});
       }
       current = current->children.at(b);
     }
+    if (!current->value) {
+      ++num_words_;
+    }
+
     current->value = move(new_value);
-    ++num_words_;
   }
 
   /**
@@ -141,11 +148,12 @@ class Trie {
    */
   size_t count(const string& word) const {
     Node* current = root_;
-    for (auto c : word) {
-      if (!current->children.count(c)) {
+    for (const auto c : word) {
+      byte b = static_cast<byte>(c);
+      if (!current->children.count(b)) {
         return 0;
       }
-      current = current->children.at(c);
+      current = current->children.at(b);
     }
     if (current->value) {
       return 1;
@@ -155,26 +163,27 @@ class Trie {
     }
   }
 
-  /**
-   * @brief search Trie for word
-   * @param [in] word
-   * @return pointer to key-value pair (almost compatible with unordered_map::find()) if found
-   */
-  pair<string, Value> find(const string& word) const {
-    Node* current = root_;
-    for (auto c : word) {
-      if (!current->children.count(c)) {
-        return nullptr;
-      }
-      current = current->children.at(c);
-    }
-    if (current->value) {
-      return {word, *(current->value)};
-    }
-    else {
-      return nullptr;
-    }
-  }
+  // /**
+  //  * @brief search Trie for word
+  //  * @param [in] word
+  //  * @return pointer to key-value pair (almost compatible with unordered_map::find()) if found
+  //  */
+  // pair<string, Value> find(const string& word) const {
+  //   Node* current = root_;
+  //   for (auto c : word) {
+  //     byte b = static_cast<byte>(c);
+  //     if (!current->children.count(b)) {
+  //       return nullptr;
+  //     }
+  //     current = current->children.at(b);
+  //   }
+  //   if (current->value) {
+  //     return {word, *(current->value)};
+  //   }
+  //   else {
+  //     return nullptr;
+  //   }
+  // }
 
  private:
   //! root node of Trie

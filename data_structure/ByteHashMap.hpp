@@ -23,8 +23,8 @@ using value_type = pair<const Key, Tp>;
 
 #define DEBUG
 
-ostream& operator<<(ostream& os, const byte& b) {
-  os << "0x" << hex << setfill('0') << setw(2) << static_cast<uint16_t>(b);
+inline ostream& operator<<(ostream& os, const byte& b) {
+  os << "0x" << setfill('0') << setw(2) << hex << static_cast<uint16_t>(b) << dec;
   return os;
 }
 
@@ -42,7 +42,6 @@ class ByteHashMap {
   }
 
   ~ByteHashMap() {
-    cerr << "ByteHashMap destructor" << endl;
     delete[] buckets_;
   }
 
@@ -84,8 +83,17 @@ class ByteHashMap {
   }
 
   template <typename... Args>
-  pair<typename vector<value_type<Tp>>::iterator, bool> emplace(Args&&... args) {
-    return insert(forward<Args>(args)...);
+  pair<typename vector<value_type<Tp>>::iterator, bool> emplace(Key k, Args&&... args) {
+    auto bucket_idx = to_integer<uint8_t>(k);
+
+    if (contains(k)) {
+      return {values_.begin() + buckets_[bucket_idx].value_idx, false};
+    }
+
+    // insert
+    buckets_[bucket_idx].value_idx = size_++;
+    values_.emplace_back(k, forward<Args>(args)...);
+    return {values_.begin() + buckets_[bucket_idx].value_idx, true};
   }
 
   pair<typename vector<value_type<Tp>>::iterator, bool> insert(const value_type<Tp>& p) {

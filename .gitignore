@@ -11,4 +11,4 @@ personal_projects.code-workspace
 *.out
 environment.yml
 **/venv/**/*
-
+./tools_for_Notion/paper_retriever/venv/

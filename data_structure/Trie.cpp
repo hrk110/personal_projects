@@ -32,6 +32,9 @@ int main(int argc, char* argv[]) {
   //   t.insert({generate_random_string(word_length), i});
   // }
 
+  // cout << "sizeof(Node*) = " << sizeof(Node*) << endl;                        // 8
+  // cout << "sizeof(shared_ptr<Node>) = " << sizeof(shared_ptr<Node>) << endl;  // 16
+
   Trie<uint8_t> t2;
   t2.insert({"he", 0});
   t2.insert({"she", 1});
@@ -39,7 +42,7 @@ int main(int argc, char* argv[]) {
   t2.insert({"hers", 3});
   t2.insert({"àâaaaaaaaa", -1});
   t2.count("he");
-  t2.find("shis");
+  // t2.find("shis"); // not implemented
   t2.print();
   // cout << "inserted" << endl;
 

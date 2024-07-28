@@ -12,6 +12,7 @@ int main(int argc, char *argv[]) {
   // cout << (uint16_t)3 << endl;
   // cout << static_cast<uint8_t>(b) << endl;
   // cout << static_cast<uint16_t>(b) << endl;
+  // 1バイトの型だとcharとして出力されてしまう
   ByteHashMap<int> hm;
   int index = 0;
   hm.emplace(static_cast<byte>('a'), index++);
@@ -19,6 +20,8 @@ int main(int argc, char *argv[]) {
   hm.emplace(static_cast<byte>('d'), index++);
   hm.emplace(static_cast<byte>(0xce), index++);
 
+  cout << (hm.contains('d') ? "contained" : "not contained") << endl;
+  cout << (hm.contains('e') ? "contained" : "not contained") << endl;
   cout << hm << endl;
   cout << hm.size() << endl;
   for (auto itr = hm.begin(); itr != hm.end(); ++itr) {
