@@ -14,4 +14,4 @@ Space for my tiny projects.
 - `tools_for_Notion`: Python script to use Notion API.
   - `kindle_highlights`: Extract highlighted parts in Kindle books and make summary page in Notion database.
   - `paper_retriever`: Get paper information with DOI and make summary page in Notion database.
-
+- `migrate-music-apps`: Python scripts for the music data migration from Apple Music to Spotify

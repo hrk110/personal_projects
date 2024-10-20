@@ -2,7 +2,7 @@
 !*/
 !*.*
 .latex_out/
-personal_projects.code-workspace
+*.code-workspace
 .DS_Store
 .vscode/
 *.dSYM/
