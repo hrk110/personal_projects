@@ -1,7 +1,0 @@
-name: tools_for_notion
-channels:
-  - defaults
-dependencies:
-  - beautifulsoup4
-  - requests
-prefix: /opt/homebrew/Caskroom/miniconda/base/envs/tools_for_notion
